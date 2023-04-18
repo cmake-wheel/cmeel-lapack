@@ -9,7 +9,7 @@ jobs:
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       matrix:
-        os: ["linux"]
+        os: ["ubuntu"]
         arch: ["x86_64"]
         build: ["cp311-*"]
     steps:
