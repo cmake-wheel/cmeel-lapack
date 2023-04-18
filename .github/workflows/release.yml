@@ -47,6 +47,8 @@ jobs:
       - run: touch setup.py
       - run: echo "FC=gfortran-12" >> $GITHUB_ENV
         if: matrix.os == 'macos'
+      - run: sed -i.bak 's/++=ON/++=OFF/g' pyproject.toml
+        if: matrix.os == 'macos'
       - run: python -m cibuildwheel --output-dir wh
         env:
           CIBW_BUILD: ${{ matrix.build }}
