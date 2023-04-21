@@ -14,7 +14,7 @@ homepage = "https://github.com/cmake-wheel/cmeel-lapack"
 repository = "https://github.com/cmake-wheel/cmeel-lapack.git"
 
 [tool.cmeel]
-build-number = 1
+build-number = 2
 configure-args = ["-DBUILD_SHARED_LIBS=ON", "-DCBLAS=ON", "-DLAPACKE=ON", "-DBLAS++=ON", "-DLAPACK++=ON"]
 py3-none = true
 run-tests = false
