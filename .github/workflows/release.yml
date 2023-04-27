@@ -6,16 +6,9 @@ on:
       - "v*"
 
 jobs:
-  build_wheels:
-    name: "Build ${{ matrix.build }} wheels on ${{ matrix.os }} ${{ matrix.arch }}"
-    runs-on: "${{ matrix.os }}-latest"
-    strategy:
-      matrix:
-        os: ["ubuntu", "macos"]
-        arch: ["x86_64"]
-        include:
-          - arch: "aarch64"
-            os: "ubuntu"
+  linux_x86_64:
+    name: "linux x86_64"
+    runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -23,28 +16,65 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          cache: 'pip'
+      - run: python -m pip install -U pip
+      - run: python -m pip install cmeel
+      - run: python -m cmeel docker -Ui quay.io/pypa/manylinux2014_x86_64
+      - uses: actions/upload-artifact@v3
+        with:
+          path: wh
+
+  linux_aarch64:
+    name: "linux aarch64"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'pip'
       - name: Set up QEMU
-        if: matrix.arch == 'aarch64'
         uses: docker/setup-qemu-action@v2
         with:
           platforms: all
       - run: python -m pip install -U pip
+      - run: python -m pip install cmeel
+      - run: python -m cmeel docker -Ui quay.io/pypa/manylinux2014_aarch64
+      - uses: actions/upload-artifact@v3
+        with:
+          path: wh
+  macos_x86_64:
+    name: "macos x86_64"
+    runs-on: "macos-10.15"
+    env:
+      SYSTEM_VERSION_COMPAT: 0
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'pip'
+      - run: python -m pip install -U pip
       - run: echo "FC=gfortran-12" >> $GITHUB_ENV
-        if: matrix.os == 'macos'
       - run: sed -i.bak 's/++=ON/++=OFF/g' pyproject.toml
-        if: matrix.os == 'macos'
       - run: python -m pip wheel -vw wh .
       - uses: actions/upload-artifact@v3
         with:
           path: wh
+
   release:
-    needs: ["build_wheels"]
+    needs: ["linux_x86_64", "linux_aarch64", "macos_x86_64"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          cache: 'pip'
       - uses: actions/download-artifact@v3
       - run: python -m pip install twine
       - run: python -m twine upload -u __token__ -p "${{ secrets.PYPI_TOKEN }}" artifact/cmeel_lapack*.whl
