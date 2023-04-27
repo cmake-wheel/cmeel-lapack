@@ -59,7 +59,7 @@ jobs:
           python-version: "3.10"
           cache: 'pip'
       - run: python -m pip install -U pip
-      - run: echo "FC=gfortran-12" >> $GITHUB_ENV
+      - run: echo "FC=gfortran-11" >> $GITHUB_ENV
       - run: sed -i.bak 's/++=ON/++=OFF/g' pyproject.toml
       - run: python -m pip wheel -vw wh .
       - uses: actions/upload-artifact@v3
