@@ -1,13 +1,13 @@
 [build-system]
-requires = ["cmeel[build]"]
 build-backend = "cmeel.build"
+requires = ["cmeel[build]"]
 
 [project]
-name = "cmeel-lapack"
-version = "3.11.0"
 description = "cmeel distribution for LAPACK"
-requires-python = ">= 3.7"
 license = "BSD-3-Clause"
+name = "cmeel-lapack"
+requires-python = ">= 3.7"
+version = "3.11.0"
 
 [project.urls]
 homepage = "https://github.com/cmake-wheel/cmeel-lapack"
@@ -15,7 +15,10 @@ repository = "https://github.com/cmake-wheel/cmeel-lapack.git"
 
 [tool.cmeel]
 build-number = 5
-configure-args = ["-DBUILD_SHARED_LIBS=ON", "-DCBLAS=ON", "-DLAPACKE=ON", "-DBLAS++=ON", "-DLAPACK++=ON"]
+configure-args = ["-DBLAS++=ON", "-DBUILD_SHARED_LIBS=ON", "-DCBLAS=ON", "-DLAPACK++=ON", "-DLAPACKE=ON"]
 py3-none = true
 run-tests = false
 source = "lapack"
+
+[tool.tomlsort]
+all = true
