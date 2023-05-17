@@ -16,6 +16,7 @@ macos_arm64_task:
     - python -m pip install -U pip
     - python -m pip install twine
   run_wheel_script:
+    - sed -i.bak 's/++=ON/++=OFF/g' pyproject.toml
     - python -m pip wheel -vw wh .
   publish_script:
     - python -m twine upload -u __token__ wh/cmeel_lapack*.whl
