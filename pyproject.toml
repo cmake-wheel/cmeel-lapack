@@ -1,12 +1,12 @@
 [build-system]
-build-backend = "cmeel.build"
+build-backend = "cmeel"
 requires = ["cmeel[build]"]
 
 [project]
 description = "cmeel distribution for LAPACK"
 license = "BSD-3-Clause"
 name = "cmeel-lapack"
-requires-python = ">= 3.7"
+requires-python = ">= 3.8"
 version = "3.11.0"
 
 [project.urls]
