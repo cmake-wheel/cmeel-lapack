@@ -26,6 +26,10 @@ jobs:
         with:
           submodules: 'true'
       - run: pipx install cibuildwheel
+      - run: echo "FC=gfortran-14" >> $GITHUB_ENV
+        if: ${{ startsWith(matrix.os, 'macos') }}
+      - run: sed -i.bak 's/++=ON/++=OFF/g' pyproject.toml
+        if: ${{ startsWith(matrix.os, 'macos') }}
       - run: cibuildwheel
         env:
           CIBW_BUILD: "${{ matrix.python }}-*"
