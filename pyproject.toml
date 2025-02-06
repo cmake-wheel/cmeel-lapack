@@ -7,7 +7,7 @@ description = "cmeel distribution for LAPACK"
 license = "BSD-3-Clause"
 name = "cmeel-lapack"
 requires-python = ">= 3.8"
-version = "3.12.0"
+version = "3.12.1"
 
 [project.urls]
 homepage = "https://github.com/cmake-wheel/cmeel-lapack"
