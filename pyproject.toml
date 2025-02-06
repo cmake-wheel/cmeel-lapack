@@ -15,7 +15,7 @@ repository = "https://github.com/cmake-wheel/cmeel-lapack.git"
 upstream = "https://netlib.org/lapack/"
 
 [tool.cmeel]
-build-number = 1
+build-number = 2
 configure-args = ["-DBLAS++=ON", "-DBUILD_SHARED_LIBS=ON", "-DCBLAS=ON", "-DLAPACK++=ON", "-DLAPACKE=ON"]
 has-sitelib = false
 run-tests = false
